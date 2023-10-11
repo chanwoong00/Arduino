@@ -1,0 +1,41 @@
+아두이노코드
+void setup() {
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int a = analogRead(A0);
+  Serial.println(a);
+  if (a < 400) {
+    digitalWrite(13, HIGH);
+  } else {
+    digitalWrite(13, LOW);
+  }
+  delay(500);
+}
+
+
+프로세싱코드
+import processing.serial.*;
+
+Serial p;
+
+void setup() {
+  p = new Serial(this, "COM3", 9600);
+  size(400, 400);
+}
+
+void draw() {
+  if (p.available() > 0) {
+    String m = p.readStringUntil('\n');
+    if (m != null) {
+      print(m);
+      if (float(m) > 28.0) {
+        background(255, 0, 0);
+      } else {
+        background(0, 255, 0);
+      }
+    }
+  }
+}
